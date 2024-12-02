@@ -14,10 +14,11 @@ class User:
 class UserFactory:
     @staticmethod
     def create_user(name, user_type):
-        if user_type.lower() in ['student', 'teacher', 'librarian']:
+        if user_type.lower() in ["student", "teacher", "librarian"]:
             return User(name, user_type.capitalize())
         else:
             raise ValueError(f"Unknown user type: {user_type}")
+
 
 # Test Factory
 if __name__ == "__main__":

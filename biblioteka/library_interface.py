@@ -22,6 +22,7 @@ from observer import LibraryCatalog as ObserverCatalog
 from user_factory import UserFactory
 from iterator import BookIterator
 
+
 class LibraryInterface:
     def __init__(self):
         # Singleton katalogu książek
@@ -58,6 +59,7 @@ class LibraryInterface:
         for user in self.users:
             print(user)
 
+
 # Test Facade
 if __name__ == "__main__":
     library = LibraryInterface()
@@ -80,4 +82,3 @@ if __name__ == "__main__":
     # Wyświetlanie użytkowników
     print("\nListing all users:")
     library.list_users()
-

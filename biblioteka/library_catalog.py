@@ -14,7 +14,8 @@ class LibraryCatalog:
         return self.books
 
     def find_book(self, title):
-        return next((book for book in self.books if book['title'] == title), None)
+        return next((book for book in self.books if book["title"] == title), None)
+
 
 # Test Singleton
 if __name__ == "__main__":
@@ -27,4 +28,3 @@ if __name__ == "__main__":
     print("Books in catalog1:", catalog1.get_books())
     print("Books in catalog2:", catalog2.get_books())
     print("Singleton test:", catalog1 is catalog2)  # Should print True
-    

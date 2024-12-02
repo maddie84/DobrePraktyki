@@ -2,6 +2,7 @@ import json
 import xml.etree.ElementTree as ET
 import csv
 
+
 class BookDataAdapter:
     @staticmethod
     def parse_json(data):
@@ -11,11 +12,10 @@ class BookDataAdapter:
     def parse_xml(data):
         root = ET.fromstring(data)
         books = []
-        for book in root.findall('book'):
-            books.append({
-                'title': book.find('title').text,
-                'author': book.find('author').text
-            })
+        for book in root.findall("book"):
+            books.append(
+                {"title": book.find("title").text, "author": book.find("author").text}
+            )
         return books
 
     @staticmethod
@@ -23,8 +23,9 @@ class BookDataAdapter:
         books = []
         reader = csv.DictReader(data.splitlines())
         for row in reader:
-            books.append({'title': row['title'], 'author': row['author']})
+            books.append({"title": row["title"], "author": row["author"]})
         return books
+
 
 # Test Adapter
 if __name__ == "__main__":
@@ -39,4 +40,3 @@ if __name__ == "__main__":
     print("JSON Data:", BookDataAdapter.parse_json(json_data))
     print("XML Data:", BookDataAdapter.parse_xml(xml_data))
     print("CSV Data:", BookDataAdapter.parse_csv(csv_data))
-    

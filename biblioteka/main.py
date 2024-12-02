@@ -23,7 +23,7 @@ for book in books_from_json + books_from_xml + books_from_csv:
     library.add_book(book)
 
 # Factory
-library.add_user("Alice", "student") 
+library.add_user("Alice", "student")
 library.add_user("Bob", "teacher")
 library.add_user("Charlie", "librarian")
 

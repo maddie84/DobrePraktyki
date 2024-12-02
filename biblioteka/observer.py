@@ -1,5 +1,6 @@
 from user_factory import User
 
+
 class LibraryCatalog:
     def __init__(self):
         self.books = []
@@ -15,6 +16,7 @@ class LibraryCatalog:
     def add_book(self, book):
         self.books.append(book)
         self.notify(f"New book added: {book['title']}")
+
 
 # Test Observer
 if __name__ == "__main__":

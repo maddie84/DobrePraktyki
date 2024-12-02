@@ -1,6 +1,15 @@
 import unittest
 from unittest.mock import Mock
-from payment_processor import PaymentProcessor, TransactionResult, TransactionStatus, NetworkException, PaymentException, RefundException, PaymentGateway
+from payment_processor import (
+    PaymentProcessor,
+    TransactionResult,
+    TransactionStatus,
+    NetworkException,
+    PaymentException,
+    RefundException,
+    PaymentGateway,
+)
+
 
 class TestPaymentProcessor(unittest.TestCase):
     def setUp(self):
@@ -11,8 +20,10 @@ class TestPaymentProcessor(unittest.TestCase):
         user_id = "user123"
         amount = 100.0
         transaction_id = "txn123"
-        
-        self.mock_gateway.charge.return_value = TransactionResult(transaction_id, TransactionStatus.COMPLETED, "")
+
+        self.mock_gateway.charge.return_value = TransactionResult(
+            transaction_id, TransactionStatus.COMPLETED, ""
+        )
 
         result = self.processor.process_payment(user_id, amount)
 
@@ -23,9 +34,9 @@ class TestPaymentProcessor(unittest.TestCase):
     def test_process_payment_insufficient_funds(self):
         user_id = "user123"
         amount = 100.0
-        
+
         self.mock_gateway.charge.side_effect = PaymentException("Insufficient funds")
-        
+
         result = self.processor.process_payment(user_id, amount)
 
         self.assertTrue(result.status == TransactionStatus.FAILED)
@@ -34,9 +45,9 @@ class TestPaymentProcessor(unittest.TestCase):
     def test_process_payment_network_exception(self):
         user_id = "user123"
         amount = 100.0
-        
+
         self.mock_gateway.charge.side_effect = NetworkException("Network error")
-        
+
         result = self.processor.process_payment(user_id, amount)
 
         self.assertTrue(result.status == TransactionStatus.FAILED)
@@ -55,8 +66,10 @@ class TestPaymentProcessor(unittest.TestCase):
     def test_refund_payment_success(self):
         transaction_id = "txn123"
         refund_id = "refund123"
-        
-        self.mock_gateway.refund.return_value = TransactionResult(refund_id, TransactionStatus.COMPLETED, "")
+
+        self.mock_gateway.refund.return_value = TransactionResult(
+            refund_id, TransactionStatus.COMPLETED, ""
+        )
 
         result = self.processor.refund_payment(transaction_id)
 
@@ -66,8 +79,10 @@ class TestPaymentProcessor(unittest.TestCase):
 
     def test_refund_payment_non_existent_transaction(self):
         transaction_id = "txn123"
-        
-        self.mock_gateway.refund.side_effect = RefundException("Transaction does not exist")
+
+        self.mock_gateway.refund.side_effect = RefundException(
+            "Transaction does not exist"
+        )
 
         result = self.processor.refund_payment(transaction_id)
 
@@ -76,7 +91,7 @@ class TestPaymentProcessor(unittest.TestCase):
 
     def test_refund_payment_network_exception(self):
         transaction_id = "txn123"
-        
+
         self.mock_gateway.refund.side_effect = NetworkException("Network error")
 
         result = self.processor.refund_payment(transaction_id)
@@ -92,22 +107,24 @@ class TestPaymentProcessor(unittest.TestCase):
     def test_get_payment_status_success(self):
         transaction_id = "txn123"
         self.mock_gateway.getStatus.return_value = TransactionStatus.COMPLETED
-        
+
         status = self.processor.get_payment_status(transaction_id)
 
         self.assertEqual(status, TransactionStatus.COMPLETED)
 
     def test_get_payment_status_non_existent_transaction(self):
         transaction_id = "txn123"
-        
-        self.mock_gateway.getStatus.side_effect = NetworkException("Transaction does not exist")
+
+        self.mock_gateway.getStatus.side_effect = NetworkException(
+            "Transaction does not exist"
+        )
 
         with self.assertRaises(NetworkException):
             self.processor.get_payment_status(transaction_id)
 
     def test_get_payment_status_network_exception(self):
         transaction_id = "txn123"
-        
+
         self.mock_gateway.getStatus.side_effect = NetworkException("Network error")
 
         with self.assertRaises(NetworkException):
@@ -117,6 +134,7 @@ class TestPaymentProcessor(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             self.processor.get_payment_status("")
         self.assertEqual(str(context.exception), "Transaction ID must not be empty")
+
 
 if __name__ == "__main__":
     unittest.main()

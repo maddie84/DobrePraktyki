@@ -14,11 +14,12 @@ class BookIterator:
         else:
             raise StopIteration
 
+
 # Test Iterator
 if __name__ == "__main__":
     books = [
         {"title": "Book H", "author": "Author 8"},
-        {"title": "Book I", "author": "Author 9"}
+        {"title": "Book I", "author": "Author 9"},
     ]
     book_iterator = BookIterator(books)
     for book in book_iterator:
