@@ -28,6 +28,7 @@ jobs:
         uses: github/super-linter@v4
         env:
           RUN_LOCAL: true
+          VALIDATE_PYTHON_FLAKE8: true
 
   test:
     runs-on: ubuntu-latest
